@@ -18,7 +18,7 @@
     "UI",
     "Component"
   ],
-  "author": "Baker Kong",
+  "author": "Baker Kong <bakercore@foxmail.com> (https://youzistack.vip)",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/xinfei-fun/KTree/issues"
@@ -26,10 +26,11 @@
   "homepage": "https://github.com/xinfei-fun/KTree#readme",
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.2",
+    "mockjs": "^1.1.0",
     "vite": "^7.2.4",
     "vue": "^3.5.24"
   },
   "peerDependencies": {
-    "vue": "^3.0.0"
+    "vue": ">=3.3.0 <4.0.0"
   }
 }
