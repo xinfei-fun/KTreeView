@@ -1,6 +1,13 @@
 
-// src/index.js
-import KTree from "./components/KTree.vue";
-import KTreeItem from "./components/KTreeItem.vue";
+import KTree from './KTree.vue'
+import KTreeItem from './KTreeItem.vue'
 
-export { KTree, KTreeItem };
+export { KTree, KTreeItem }
+
+export default {
+  install(app) {
+    app.component('KTree', KTree)
+    app.component('KTreeItem', KTreeItem)
+  }
+}
+
