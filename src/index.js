@@ -1,5 +1,5 @@
 
-import KTree from './KTree.vue'
+import KTree from './KTreeList.vue'
 import KTreeItem from './KTreeItem.vue'
 
 export { KTree, KTreeItem }

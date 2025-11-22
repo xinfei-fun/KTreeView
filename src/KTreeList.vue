@@ -1,5 +1,5 @@
 <template>
-  <div class="ktree">
+  <div class="ktreelist">
 
     
 
@@ -13,10 +13,16 @@
 
 <script setup>
 import KTreeItem from './KTreeItem.vue'
+
+defineOptions({
+  name: 'KTreeList'
+})
+
+
 defineProps({
-  data: {
-    type: Array,
-    default: () => []
+  node: {
+    type: Object,
+    default: () => ({})
   }
 })
 </script>

@@ -1,16 +1,16 @@
 {
-  "name": "@baker_kong/ktree",
+  "name": "@baker_kong/ktreelist",
   "version": "0.0.1",
-  "description": "A Vue3 Tree component, supports heavy nodes, with virtual scroll feature!",
+  "description": "A Vue3 Tree component, supports heavy nodes, with virtual scroll list!",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "scripts": {
     "build": "vite build",
-    "dev": "vite"
+    "dev": "vite -c ./playground/vite.config.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/xinfei-fun/KTree.git"
+    "url": "git+https://github.com/xinfei-fun/KTreeList.git"
   },
   "keywords": [
     "Tree",
@@ -21,9 +21,9 @@
   "author": "Baker Kong <bakercore@foxmail.com> (https://youzistack.vip)",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/xinfei-fun/KTree/issues"
+    "url": "https://github.com/xinfei-fun/KTreeList/issues"
   },
-  "homepage": "https://github.com/xinfei-fun/KTree#readme",
+  "homepage": "https://github.com/xinfei-fun/KTreeList#readme",
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.2",
     "mockjs": "^1.1.0",
