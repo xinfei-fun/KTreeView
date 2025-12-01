@@ -56,7 +56,7 @@ export default class TreeModel {
         }
     }
 
-    /**         
+    /**
      * @description 这个是把树结构打平。注意这里的生成的 node 会用于渲染，所以他们的属性和原始数据有些不同. 另外不需要打平所有数据，只需要打平出现的节点即可
      */
     _reFlattenTree() {
@@ -81,5 +81,9 @@ export default class TreeModel {
                 }
             }
         };
+
+        dfsFn(this.#rawTreeData, 0);
+
+        return result;
     }
 }
