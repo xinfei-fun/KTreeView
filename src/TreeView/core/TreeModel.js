@@ -17,10 +17,17 @@ export default class TreeModel {
 
     #expandedIdsSet; // 一个set，用来记录展开的节点，方便查找（复杂度低）
 
-    constructor() {
+    #flattenList; // 一个打平的结构
+
+    #loadChildrenFn; // 用于加载 children 的方法， 接受同步或者异步（promise）
+
+    constructor(loaderFn) {
         this.#rawTreeData = [];
         this.#nodeMap = new Map();
         this.#expandedIdsSet = new Set();
+        this.#flattenList = [];
+
+        this.#loadChildrenFn = loaderFn;
     }
 
     /**
@@ -31,6 +38,9 @@ export default class TreeModel {
         this.#rawTreeData = cloneDeep(rootListData);
         this.#nodeMap.clear();
         this.#expandedIdsSet.clear();
+
+        this._buildNodeMap(this.#rawTreeData);
+        this._reFlattenTree();
     }
 
     /**
@@ -66,15 +76,15 @@ export default class TreeModel {
             for (const node of nodes) {
                 const isExpanded = this.isNodeExpanded(node.id);
 
-                const tempNode = {
-                    id: node.id,
-                    name: node.name,
+                Object.assign(node, {
                     level,
-                    isLeaf: node.isLeaf,
                     isExpanded,
-                };
+                    children: node.children || [],
+                    alreadyLoad: node.alreadyLoad || false,
+                    isLoading: node.isLoading || false,
+                });
 
-                result.push(tempNode);
+                result.push(node);
 
                 if (isExpanded && !node.isLeaf) {
                     dfsFn(node.children || [], level + 1);
@@ -84,6 +94,65 @@ export default class TreeModel {
 
         dfsFn(this.#rawTreeData, 0);
 
-        return result;
+        this.#flattenList = result;
+    }
+
+    get flattenList() {
+        return this.#flattenList;
+    }
+
+    // 展开
+    async expand(item) {
+        const node = this.#nodeMap.get(item.id);
+
+        if (!node) {
+            console.log('cannot find node:', item);
+            return;
+        }
+
+        if (item.isLoading) {
+            console.log('The current node is already loading!');
+            return;
+        }
+
+        this.#expandedIdsSet.add(item.id);
+
+        // 如果没有加载过
+        if (!node.alreadyLoad) {
+            item.isLoading = true;
+
+            const maybePromise = this.#loadChildrenFn(node);
+
+            let result = [];
+            try {
+                if (maybePromise instanceof Promise) {
+                    result = await maybePromise;
+                } else {
+                    result = maybePromise;
+                }
+            } catch (error) {
+                console.error(error);                
+                return;
+            }finally{
+                item.isLoading = false;
+            }
+
+            this._buildNodeMap(result);
+            node.children = result;
+            node.alreadyLoad = true;            
+        }
+
+        this._reFlattenTree();
+    }
+
+    // 折叠
+    collapse(item) {
+        this.#expandedIdsSet.delete(item.id);
+        this._reFlattenTree();
+    }    
+
+    // 获取节点数量
+    getNodeCount() {
+        return this.#nodeMap.size;
     }
 }
