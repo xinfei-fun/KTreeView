@@ -1,13 +1,12 @@
+import TreeView from './TreeView/ui/TreeView.vue';
+import VirtualList from './TreeView/ui/VirtualList.vue';
 
-import KTree from './KTreeList.vue'
-import KTreeItem from './KTreeItem.vue'
+// 1) 命名导出组件
+export const KTreeView = TreeView;
+export const KVirtualList = VirtualList;
 
-export { KTree, KTreeItem }
-
-export default {
-  install(app) {
-    app.component('KTree', KTree)
-    app.component('KTreeItem', KTreeItem)
-  }
+// 2) 插件方式（也是命名导出）
+export function install(app) {
+    app.component('KTreeView', TreeView);
+    app.component('KVirtualList', VirtualList);
 }
-
