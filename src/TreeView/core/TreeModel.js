@@ -101,55 +101,54 @@ export default class TreeModel {
         return this.#flattenList;
     }
 
+    // 根据id 获取节点
+    getNodeById(id) {
+        return this.#nodeMap.get(id);
+    }
+
     // 展开
-    async expand(item) {
-        const node = this.#nodeMap.get(item.id);
+    async expand(id) {
+        const node = this.getNodeById(id);
 
         if (!node) {
-            console.log('cannot find node:', item);
+            console.log('cannot find node:', node);
             return;
         }
 
-        if (item.isLoading) {
+        if (node.isLoading) {
             console.log('The current node is already loading!');
             return;
         }
 
-        this.#expandedIdsSet.add(item.id);
-
         // 如果没有加载过
         if (!node.alreadyLoad) {
-            item.isLoading = true;
+            node.isLoading = true;
 
             const maybePromise = this.#loadChildrenFn(node);
+            const promise = maybePromise instanceof Promise ? maybePromise : new Promise((resolve) => resolve(maybePromise));
 
-            let result = [];
             try {
-                if (maybePromise instanceof Promise) {
-                    result = await maybePromise;
-                } else {
-                    result = maybePromise;
-                }
+                const result = await promise;
+                this._buildNodeMap(result);
+                node.children = result;
+                node.alreadyLoad = true;
             } catch (error) {
-                console.error(error);                
+                console.error(error);
                 return;
-            }finally{
-                item.isLoading = false;
+            } finally {
+                node.isLoading = false;
             }
-
-            this._buildNodeMap(result);
-            node.children = result;
-            node.alreadyLoad = true;            
         }
 
+        this.#expandedIdsSet.add(id);
         this._reFlattenTree();
     }
 
     // 折叠
-    collapse(item) {
-        this.#expandedIdsSet.delete(item.id);
+    collapse(id) {
+        this.#expandedIdsSet.delete(id);
         this._reFlattenTree();
-    }    
+    }
 
     // 获取节点数量
     getNodeCount() {

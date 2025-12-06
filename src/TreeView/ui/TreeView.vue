@@ -45,6 +45,8 @@ defineOptions({
     name: 'KTreeView',
 });
 
+const emit = defineEmits(['node-click']);
+
 const props = defineProps({
     itemHeight: {
         type: Number,
@@ -70,11 +72,13 @@ const selectedNodeId = ref(null);
 const handleNodeClick = async (item) => {
     selectedNodeId.value = item.id;
 
+    emit('node-click', item);
+
     if (!item.isLeaf) {
         if (item.isExpanded) {
-            treemodel.collapse(item);
+            treemodel.collapse(item.id);
         } else {
-            await treemodel.expand(item);
+            await treemodel.expand(item.id);
         }
         flatenList.value = treemodel.flattenList;
     }
@@ -83,6 +87,14 @@ const handleNodeClick = async (item) => {
 defineExpose({
     reBuildTree: (treeData) => {
         treemodel.reBuild(treeData);
+        flatenList.value = treemodel.flattenList;
+    },
+    collapseNode: (nodeId) => {
+        treemodel.collapse(nodeId);
+        flatenList.value = treemodel.flattenList;
+    },
+    expandNode: async (nodeId) => {
+        await treemodel.expand(nodeId);
         flatenList.value = treemodel.flattenList;
     },
 });

@@ -32,22 +32,16 @@
                 <div class="control-section">
                     <h3>操作</h3>
                     <div class="button-row">
-                        <button @click="expandAll">展开所有</button>
-                        <button @click="collapseAll">折叠所有</button>
                         <button @click="resetTree">重置</button>
                     </div>
-                </div>
-
-                <div class="stats">
-                    <p>当前节点数：{{ nodeCount }}</p>
-                </div>
+                </div>                
             </div>
 
             <!-- 树组件区域 -->
             <div class="tree-container">
                 <h3>树组件预览</h3>
                 <div class="tree-wrapper">
-                    <TreeView
+                    <KTreeView
                         ref="treeviewRef"
                         :item-height="itemHeight"
                         :indent-size="indentSize"
@@ -63,7 +57,7 @@
 <script setup>
 import { useTemplateRef, ref } from 'vue';
 import { genRandomData } from './genRandomData.js';
-import TreeView from '../src/TreeView/ui/TreeView.vue';
+import { KTreeView } from '../src/index.js';
 
 const treeviewRef = useTemplateRef('treeviewRef');
 const count = ref(50);
@@ -84,14 +78,6 @@ const onClick = () => {
 
 const getChildren = (nodeid) => {
     return genRandomData(nodeid, count.value, 1100);
-};
-
-const expandAll = () => {
-    console.log('展开所有节点');
-};
-
-const collapseAll = () => {
-    console.log('折叠所有节点');
 };
 
 const resetTree = () => {
@@ -133,15 +119,15 @@ const resetTree = () => {
     padding: 20px;
     max-width: 1200px;
     margin: 0 auto;
+    align-items: stretch;
 }
 
 .control-panel {
-    width: 300px;
+    width: 300px;    
     background: white;
     border-radius: 8px;
     padding: 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    height: fit-content;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);    
 }
 
 .control-section {
@@ -260,7 +246,7 @@ const resetTree = () => {
 }
 
 .tree-wrapper {
-    height: 500px;
+    height: 450px;
     border: 1px solid #ddd;
     border-radius: 4px;
     overflow: hidden;
@@ -283,5 +269,10 @@ const resetTree = () => {
     .button-row {
         flex-direction: row;
     }
+}
+</style>
+<style>
+body {
+    margin: 0;
 }
 </style>
