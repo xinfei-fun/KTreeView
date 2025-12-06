@@ -6,7 +6,7 @@
 
         <!-- 内容层, 这是实际的内容 -->
         <div class="k-content-layer" :style="{ transform: `translateY(${renderState.offset}px)` }">
-            <slot :visibleItems="renderState.visibleItems"></slot>
+            <slot :visible-items="renderState.visibleItems"></slot>
         </div>
     </div>
 </template>
@@ -28,7 +28,6 @@ const props = defineProps({
     listItems: {
         type: Array,
         required: true,
-        default: () => [],
     },
 });
 

@@ -1,6 +1,6 @@
 <template>
     <div class="k-tree-view">
-        <VirtualList :listItems="flatenList" :item-height="itemHeight">
+        <VirtualList :list-items="flatenList" :item-height="itemHeight">
             <template #default="{ visibleItems }">
                 <div
                     v-for="item in visibleItems"

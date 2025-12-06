@@ -6,8 +6,8 @@ export default defineConfig({
   build: {
     lib: {
       entry: './src/index.js',
-      name: 'KTree',
-      fileName: 'ktree'
+      name: 'KTreeView',
+      fileName: 'ktreeview'
     },
     rollupOptions: {
       external: ['vue'],

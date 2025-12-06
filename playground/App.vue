@@ -12,8 +12,8 @@
                     <h3>基本设置</h3>
                     <div class="input-row">
                         <label>节点数量：</label>
-                        <input type="number" v-model="count" min="1" max="1000" placeholder="50" />
-                        <button @click="onClick" :disabled="!count || count <= 0">生成树</button>
+                        <input v-model="count" type="number" min="1" max="1000" placeholder="50" />
+                        <button :disabled="!count || count <= 0" @click="onClick">生成树</button>
                     </div>
                 </div>
 
@@ -21,11 +21,11 @@
                     <h3>样式设置</h3>
                     <div class="input-row">
                         <label>节点高度：{{ itemHeight }}px</label>
-                        <input type="range" v-model="itemHeight" min="20" max="60" step="2" />
+                        <input v-model="itemHeight" type="range" min="20" max="60" step="2" />
                     </div>
                     <div class="input-row">
                         <label>缩进大小：{{ indentSize }}px</label>
-                        <input type="range" v-model="indentSize" min="8" max="40" step="2" />
+                        <input v-model="indentSize" type="range" min="8" max="40" step="2" />
                     </div>
                 </div>
 
