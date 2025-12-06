@@ -1,15 +1,24 @@
 {
   "name": "@baker_kong/ktreeview",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A Vue3 TreeView component, supports heavy nodes, with virtual scroll list!",
   "type": "module",
   "main": "dist/ktreeview.umd.cjs",
   "module": "dist/ktreeview.js",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/ktreeview.js",
+      "require": "./dist/ktreeview.umd.cjs"
+    }
+  },
   "scripts": {
     "build": "vite build",
     "dev": "vite -c ./playground/vite.config.js",
-    "lint": "eslint . --ext .vue,.js",
-    "lint:fix": "eslint . --ext .vue,.js --fix"
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "repository": {
     "type": "git",

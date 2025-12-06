@@ -46,9 +46,8 @@ export default [
       // 代码质量
       eqeqeq: 'warn',
       curly: 'warn',
-      'no-val': 'off', // 注意：JS中没有 no-val 规则，可能是你想写 'no-eval' 或 'no-var'？这里删掉了不存在的规则
       'no-eval': 'error',
-      'no-empty-function': 'warn'      
+      'no-empty-function': 'warn'
     },
   },
 

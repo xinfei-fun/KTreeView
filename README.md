@@ -29,7 +29,38 @@ npm install @baker_kong/ktreeview
 yarn add @baker_kong/ktreeview
 ```
 
-## 🚀 快速开始
+## � 按需自动引入 (可选)
+
+如果你使用 `unplugin-vue-components` 来自动引入组件，可以配置自定义 Resolver 来实现组件和样式的自动引入，无需手动 import。
+
+在你的 `vite.config.js` 中：
+
+```javascript
+import { defineConfig } from 'vite'
+import Components from 'unplugin-vue-components/vite'
+
+export default defineConfig({
+  plugins: [
+    Components({
+      resolvers: [
+        (componentName) => {
+          // 匹配 KTreeView 或 KVirtualList
+          if (componentName.startsWith('K')) {
+            return {
+              name: componentName,
+              from: '@baker_kong/ktreeview',
+              // 自动引入对应的 CSS
+              sideEffects: '@baker_kong/ktreeview/dist/ktreeview.css'
+            }
+          }
+        }
+      ]
+    })
+  ]
+})
+```
+
+## �🚀 快速开始
 
 ### 基本使用
 
@@ -45,6 +76,7 @@ yarn add @baker_kong/ktreeview
 
 <script setup>
 import { KTreeView } from '@baker_kong/ktreeview';
+import '@baker_kong/ktreeview/dist/ktreeview.css'; // ⚠️ 务必引入样式文件
 
 // 获取子节点的函数
 const getChildren = async (nodeId) => {
@@ -59,7 +91,7 @@ const getChildren = async (nodeId) => {
 
 ### 完整示例
 
-![运行示例](./docs/Dec-06-2025%2011-27-04.gif)
+![运行示例](https://raw.githubusercontent.com/xinfei-fun/KTreeView/main/docs/Dec-06-2025%2011-27-04.gif)
 
 
 ## 📖 API 文档
